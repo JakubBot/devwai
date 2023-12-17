@@ -92,14 +92,22 @@ function addImage($db, $name, $targetFile, $type)
     $title = isset($_POST["title"]) ? htmlspecialchars($_POST["title"]) : "";
     $author = isset($_POST["author"]) ? htmlspecialchars($_POST["author"]) : "";
 
-    $insertResult = $db->images->insertOne([
-        'name' => $name,
-        'path' => $targetFile,
-        'type' => $type,
-        'title' => $title,
-        'author' => $author,
-    ]);
-    return $insertResult;
+    try {
+        $db->images->insertOne([
+            'name' => $name,
+            'path' => $targetFile,
+            'type' => $type,
+            'title' => $title,
+            'author' => $author,
+        ]);
+
+        return true;
+    } catch (Exception $e) {
+        error_log("Błąd przy dodawaniu obrazu do bazy danych: " . $e->getMessage());
+        return false;
+
+    }
+
 }
 
 function checkHasNextImages()
@@ -158,9 +166,10 @@ function handleUpload($targetFile)
 {
     $db = get_db();
 
-    $insertResult = addImage($db, htmlspecialchars(basename($_FILES["fileToUpload"]["name"])), $targetFile, 'original');
 
-    if ($insertResult->getInsertedCount() > 0) {
+    try {
+        addImage($db, htmlspecialchars(basename($_FILES["fileToUpload"]["name"])), $targetFile, 'original');
+
         $watermarkImagePath = applyWatermark($targetFile, $_POST["watermarkText"]);
 
         addImage($db, htmlspecialchars(basename($_FILES["fileToUpload"]["name"])), $watermarkImagePath, 'watermarked');
@@ -170,7 +179,7 @@ function handleUpload($targetFile)
 
         addImage($db, htmlspecialchars(basename($_FILES["fileToUpload"]["name"])), $thumbnailPath, 'thumbnail');
 
-    } else {
+    } catch (Exception $e) {
         echo "Przepraszamy, wystąpił błąd podczas dodawania informacji o pliku do bazy danych.";
     }
     echo '<script>window.location.href = "/images";</script>';
@@ -238,11 +247,13 @@ function authenticateUser()
     $storedHashedPassword = $user['password'];
 
     if ($user != null && password_verify($password, $storedHashedPassword)) {
+        session_regenerate_id();
         $_SESSION['user_id'] = $user['login'];
         echo '<script>window.location.href = "/";</script>';
         exit();
     } else {
         $_SESSION['login_error'] = "Nieprawidłowy login lub hasło";
+        echo '<script>window.location.href = "/login";</script>';
         exit();
     }
 }

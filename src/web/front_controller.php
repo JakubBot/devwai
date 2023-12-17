@@ -1,12 +1,10 @@
 <?php
 require_once '../controllers.php'; 
 require_once '../../vendor/autoload.php';
-// require '../access.php'; //kontrola dostępu
-//wybór kontrolera do wywołania:
 require_once '../routing.php';
 require_once '../dispatcher.php';
 
-// session_start();
+ini_set('display_errors', 'Off');
 
 $model = [];
 

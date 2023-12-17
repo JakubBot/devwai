@@ -61,7 +61,6 @@ function authenticate(&$model)
 
     } else {
         echo '<script>window.location.href = "/login";</script>';
-
     }
 
     return 'authenticate_view';

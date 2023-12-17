@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +21,7 @@ session_start();
         <li class="navigation__item">
           <a href="index.php"> Strona główna </a>
         </li>
-       
+
         <li class="navigation__item">
           <a href="/images">Zobacz galerie zdjec</a>
         </li>
