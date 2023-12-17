@@ -41,19 +41,7 @@ session_start();
             <li class="navigation__item">
               <a href="index.php"> Strona główna </a>
             </li>
-            <li class="navigation__item">
-              <a href="odkrycia.html"> Odkrycia</a>
-            </li>
-            <li class="navigation__item navigation__inner__container">
-              <a href="wydarzenia.html"> Wydarzenia </a>
 
-              <div class="navigation__inner">
-                <a target="_blank" href="https://pl.wikipedia.org/wiki/Archeologia#Historia_archeologii">Historia
-                  archeologi</a>
-                <a target="_blank" href="https://pl.wikipedia.org/wiki/Archeologia#Archeologia_w_Polsce">Archeologia w
-                  Polsce</a>
-              </div>
-            </li>
             <li class="navigation__item">
               <a href="/images">Zobacz galerie zdjec</a>
             </li>

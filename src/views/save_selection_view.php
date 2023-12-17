@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sessionImages = isset($_SESSION['selected_images']) ? $_SESSION['selected_images'] : [];
