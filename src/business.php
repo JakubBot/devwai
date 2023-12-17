@@ -18,54 +18,6 @@ function get_db()
     return $db;
 }
 
-function get_products()
-{
-    $db = get_db();
-    return $db->products->find()->toArray();
-}
-
-function get_products_by_category($cat)
-{
-    $db = get_db();
-    $products = $db->products->find(['cat' => $cat]);
-    return $products;
-}
-
-function get_product($id)
-{
-    $db = get_db();
-    return $db->products->findOne(['_id' => new ObjectID($id)]);
-}
-
-function save_product($id, $product)
-{
-    $db = get_db();
-
-    if ($id == null) {
-        $db->products->insertOne($product);
-    } else {
-        $db->products->replaceOne(['_id' => new ObjectID($id)], $product);
-    }
-
-    return true;
-}
-
-function delete_product($id)
-{
-    $db = get_db();
-    $db->products->deleteOne(['_id' => new ObjectID($id)]);
-}
-
-
-function get_sample_cart()
-{
-    return [
-        1 => ['name' => 'Product A', 'amount' => 3],
-        2 => ['name' => 'Product B', 'amount' => 5],
-        3 => ['name' => 'Product C', 'amount' => 2],
-    ];
-}
-
 function save_image($id, $image)
 {
     $db = get_db();
@@ -85,8 +37,6 @@ function get_images()
 {
     $db = get_db();
     $_imgs = $db->images->find()->toArray();
-    // $cos = get_sample_cart();
-    // print_r($images);
     return $_imgs;
 
 }
